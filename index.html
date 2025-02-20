@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista Produktów</title>
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Dodawanie produkcji lub kosztów</h1>
+    </header>
+    <main>
+      <section class="inputsAdd">
+        <section class="addProduct addSection">
+          <h2>Dodaj Produkcje Lub Koszty</h2>
+          <label ><input type="radio" name="inputTypeChoose" class="productionRadio" id="production" checked>Chcę dodać produkcje </label>
+          <label ><input type="radio" name="inputTypeChoose" class="productionRadio" id="productionCosts"> Chcę dodać koszty</label>
+          <input type="text" id="nazwa" placeholder="Nazwa produktu" />
+          <input type="number" id="ilosc" placeholder="Ilość" />
+          <input type="text" id="cena" placeholder="Cena" />
+          <section class="optionalInput">
+            <input class="yearInput" type="number" maxlength="4" />
+            <select name="" class="monthInput">
+              <option value="Styczen">Styczen</option>
+              <option value="Luty">Luty</option>
+              <option value="Marzec">Marzec</option>
+              <option value="Kwiecien">Kwiecien</option>
+              <option value="Maj">Maj</option>
+              <option value="Czerwiec">Czerwiec</option>
+              <option value="Lipiec">Lipiec</option>
+              <option value="Sierpien">Sierpien</option>
+              <option value="Wrzesien">Wrzesien</option>
+              <option value="Pazdziernik">Pazdziernik</option>
+              <option value="Listopad">Listopad</option>
+              <option value="Grudzien">Grudzien</option>
+            </select>
+          </section>
+
+          <input type="submit" class="addProductBtn" value="Dodaj" />
+          <label>
+            <input type="checkbox" name="monthYear" id="monthYear" />
+            Czy chcesz sam wpisać Miesiąc i Rok
+          </label>
+        </section>
+      </section>
+      <section class="list">
+        <label ><input type="radio" name="viewType" class="listRadio" id="listProducts" checked >Chcę widzieć produkcje </label>
+        <label ><input type="radio" name="viewType" class="listRadio" id="listCosts"> Chcę widzieć koszty</label>
+        <h2 class="heading">Lista Produkcji</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nazwa</th>
+              <th>Miesiąc</th>
+              <th>Ilość</th>
+              <th>Cena</th>
+              <th>Suma</th>
+              <th>Rok</th>
+            </tr>
+          </thead>
+          <tbody id="productTable" class = "Table"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
