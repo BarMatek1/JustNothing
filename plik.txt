@@ -1,0 +1,185 @@
+document.addEventListener("DOMContentLoaded", () => {
+  insertIncomes(null, null); // Domyślnie pobieramy wszystkie dochody
+});
+
+
+
+const infoIcon = document.querySelector(".info");
+const instruction = document.querySelector(".instruction");
+const turnOffBtn = document.querySelector(".turnOffBtn");
+const addProductBtn = document.querySelector(".addProductBtn");
+const checkbox = document.querySelector("#monthYear");
+const optionalInput = document.querySelector(".optionalInput");
+const productionRadio = document.querySelectorAll(".productionRadio");
+const listRadio = document.querySelectorAll(".listRadio");
+const typeOfIncome = document.querySelectorAll(".typeOfIncome");
+const optionalIncomeInput = document.querySelector('.optionalIncomeInput')
+const searchButton = document.querySelector(".searchButton");
+
+let dbInfo = "Product";
+let viewInfo = "Product";
+let checked;
+const today = new Date();
+const monthNames = [
+  "Styczen",
+  "Luty",
+  "Marzec",
+  "Kwiecien",
+  "Maj",
+  "Czerwiec",
+  "Lipiec",
+  "Sierpien",
+  "Wrzesien",
+  "Pazdziernik",
+  "Listopad",
+  "Grudzien",
+];
+const currentMonth = monthNames[today.getMonth()];
+
+let incomeMonth = monthNames[0]
+let miesiac = currentMonth;
+let rok = today.getFullYear();
+
+let monthOfIncome = null
+let yearOfIncome = null
+
+
+checkbox.addEventListener("change", () => {
+  if (checkbox.checked) {
+    optionalInput.classList.add("optionalInput--active");
+    checked = true;
+  } else {
+    optionalInput.classList.remove("optionalInput--active");
+    checked = false;
+  }
+});
+
+productionRadio.forEach((radio) => {
+  radio.addEventListener("change", () => {
+    if (productionRadio[0].checked) {
+      dbInfo = "Product";
+    } else {
+      dbInfo = "Expenses";
+    }
+  });
+});
+
+searchButton.addEventListener("click", () => {
+  let selectedYear = document.querySelector(".yearIncomeInput").value;
+  let selectedMonth = typeOfIncome[2].checked ? document.querySelector(".monthIncomeInput").value : null;
+
+  insertIncomes(selectedMonth, selectedYear);
+});
+
+
+
+
+typeOfIncome.forEach((radio) => {
+  radio.addEventListener("change", () => {
+    optionalIncomeInput.classList.remove("optionalIncomeInput--active");
+    document.querySelector(".monthIncomeInput").disabled = false; // Resetujemy
+
+    if (typeOfIncome[0].checked) {
+      insertIncomes(null, null);
+    } else if (typeOfIncome[1].checked) {
+      optionalIncomeInput.classList.add("optionalIncomeInput--active");
+      document.querySelector(".monthIncomeInput").disabled = true;
+    } else {
+      optionalIncomeInput.classList.add("optionalIncomeInput--active");
+    }
+  });
+});
+
+
+
+listRadio.forEach((radio) => {
+  radio.addEventListener("change", async () => {
+    if (listRadio[0].checked) {
+      viewInfo = "Product";
+      document.querySelector(".heading").textContent = "Lista produkcji";
+      downloadProducts(viewInfo);
+    } else {
+      viewInfo = "Expenses";
+      document.querySelector(".heading").textContent = "Lista kosztów";
+      downloadProducts(viewInfo);
+    }
+  });
+});
+
+addProductBtn.addEventListener("click", addProduct);
+
+async function addProduct() {
+  const nazwa = document.getElementById("nazwa").value;
+  const ilosc = document.getElementById("ilosc").value;
+  const cena = document.getElementById("cena").value;
+  let suma = parseFloat(cena).toFixed(2) * parseInt(ilosc);
+
+  if (checked) {
+    miesiac = document.querySelector(".monthInput").value;
+    rok = document.querySelector(".yearInput").value;
+  } else {
+    optionalInput.classList.remove("optionalInput--active");
+    miesiac = currentMonth;
+    rok = today.getFullYear();
+  }
+  await fetch("http://localhost:3001/dodaj", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nazwa, miesiac, ilosc, cena, suma, rok, dbInfo }),
+  });
+  downloadProducts(viewInfo);
+}
+
+async function insertIncomes(monthOfIncome, yearOfIncome) {
+  try {
+    const response = await fetch("http://localhost:3001/zysk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ monthOfIncome, yearOfIncome }),
+    });
+
+    if (!response.ok) throw new Error("Błąd pobierania danych");
+
+    const data = await response.json();
+    updateTable(data);
+  } catch (error) {
+    console.error("Błąd:", error);
+  }
+}
+
+async function downloadProducts(typeOfView) {
+  let res;
+  if (typeOfView === "Product") {
+    res = await fetch("http://localhost:3001/produkty");
+  } else {
+    res = await fetch("http://localhost:3001/koszty");
+  }
+  const produkty = await res.json();
+  const productTable = document.getElementById("productTable");
+  productTable.innerHTML = produkty
+    .map(
+      (p) =>
+        `<tr>
+              <td>${p.nazwa_produktu}</td>
+              <td>${p.miesiac}</td>
+              <td>${p.ilosc}</td>
+              <td>${p.cena}</td>
+              <td>${p.suma}</td>
+              <td>${p.rok}</td>
+          </tr>`
+    )
+    .join("");
+}
+function updateTable(data) {
+  const tbody = document.querySelector(".bodyOfTable");
+  tbody.innerHTML = `
+    <tr>
+      <td>${data.produkty} PLN</td>
+      <td>${data.koszty} PLN</td>
+      <td>${data.produkty - data.koszty} PLN</td>
+    </tr>
+  `;
+}
+
+
+downloadProducts(viewInfo);

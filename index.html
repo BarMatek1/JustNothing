@@ -14,8 +14,24 @@
       <section class="inputsAdd">
         <section class="addProduct addSection">
           <h2>Dodaj Produkcje Lub Koszty</h2>
-          <label ><input type="radio" name="inputTypeChoose" class="productionRadio" id="production" checked>Chcę dodać produkcje </label>
-          <label ><input type="radio" name="inputTypeChoose" class="productionRadio" id="productionCosts"> Chcę dodać koszty</label>
+          <label
+            ><input
+              type="radio"
+              name="inputTypeChoose"
+              class="productionRadio"
+              id="production"
+              checked
+            />Chcę dodać produkcje
+          </label>
+          <label
+            ><input
+              type="radio"
+              name="inputTypeChoose"
+              class="productionRadio"
+              id="productionCosts"
+            />
+            Chcę dodać koszty</label
+          >
           <input type="text" id="nazwa" placeholder="Nazwa produktu" />
           <input type="number" id="ilosc" placeholder="Ilość" />
           <input type="text" id="cena" placeholder="Cena" />
@@ -45,8 +61,19 @@
         </section>
       </section>
       <section class="list">
-        <label ><input type="radio" name="viewType" class="listRadio" id="listProducts" checked >Chcę widzieć produkcje </label>
-        <label ><input type="radio" name="viewType" class="listRadio" id="listCosts"> Chcę widzieć koszty</label>
+        <label
+          ><input
+            type="radio"
+            name="viewType"
+            class="listRadio"
+            id="listProducts"
+            checked
+          />Chcę widzieć produkcje
+        </label>
+        <label
+          ><input type="radio" name="viewType" class="listRadio" id="listCosts" /> Chcę
+          widzieć koszty</label
+        >
         <h2 class="heading">Lista Produkcji</h2>
         <table>
           <thead>
@@ -59,9 +86,55 @@
               <th>Rok</th>
             </tr>
           </thead>
-          <tbody id="productTable" class = "Table"></tbody>
+          <tbody id="productTable" class="Table"></tbody>
         </table>
       </section>
+
+      <section class="searchIncomes list">
+        <h3>Wyszukaj swoje zarobki z danego miesiąca / roku / lat</h3>
+        <label>
+          Chcę wyszukać wszystkie moje zarobki
+          <input type="radio" name="incomeVersion" class="typeOfIncome" id="allIncomes" checked/>
+        </label>
+        <label>
+          Chcę wyszukać zarobki z danego  roku
+          <input type="radio" name="incomeVersion" class="typeOfIncome" id="yearIncome"/>
+        </label>
+        <label>
+          Chcę wyszukać zarobki z danego miesiąca w danym roku
+          <input type="radio" name="incomeVersion" class="typeOfIncome" id="monthIncome"/>
+        </label>
+        
+        <section class="optionalIncomeInput">
+          <input class="yearIncomeInput" type="number" maxlength="4" />
+          <select name="" class="monthIncomeInput">
+            <option value="Styczen">Styczen</option>
+            <option value="Luty">Luty</option>
+            <option value="Marzec">Marzec</option>
+            <option value="Kwiecien">Kwiecien</option>
+            <option value="Maj">Maj</option>
+            <option value="Czerwiec">Czerwiec</option>
+            <option value="Lipiec">Lipiec</option>
+            <option value="Sierpien">Sierpien</option>
+            <option value="Wrzesien">Wrzesien</option>
+            <option value="Pazdziernik">Pazdziernik</option>
+            <option value="Listopad">Listopad</option>
+            <option value="Grudzien">Grudzien</option>
+          </select>
+          <button class="searchButton">Szukaj</button>
+        </section>
+        
+
+      <table>
+        <thead>
+          <th>dochód</th>
+          <th>koszty</th>
+          <th>zysk</th>
+        </thead>
+        <tbody class="bodyOfTable Table">
+          
+        </tbody>
+      </table>
     </main>
 
     <script src="./index.js"></script>

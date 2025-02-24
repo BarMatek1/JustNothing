@@ -15,7 +15,7 @@ header {
   color: #fafafa;
   text-shadow: 2px 2px 5px #807f7f;
 }
-.inputsAdd{
+.inputsAdd {
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@ header {
   height: 600px;
 }
 
-.addSection{
+.addSection {
   width: 35%;
   display: flex;
   justify-content: center;
@@ -33,23 +33,24 @@ header {
   text-align: center;
 }
 
-.addSection input, .addSection button {
+.addSection input,
+.addSection button {
   padding: 15px;
   margin: 5px 0;
   border-radius: 3px;
 }
 
-.addSection .addProductBtn{
+.addSection .addProductBtn {
   background-color: #3f6ef0;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
 }
-.addSection h2{
+.addSection h2 {
   margin: 5px auto;
 }
 
-.list{
+.list {
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -60,20 +61,21 @@ header {
   height: 400px;
   overflow-y: auto;
 }
-table{
+table {
   width: 100%;
   border-top: 1px solid black;
   border-right: 1px solid black;
 }
-thead{
+thead {
   width: 100%;
   height: 70px;
 }
-.list h2{
+.list h2 {
   margin: 10px 0;
 }
 
-.list th, .list td{
+.list th,
+.list td {
   font-size: 18px;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
@@ -81,20 +83,47 @@ thead{
   border-radius: 3px;
 }
 
-.optionalInput{
-  display: none;
-  width: 100%;
-  justify-content: center;
+.optionalInput {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  display: flex;
+  margin: 5px auto;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+  width: 80%;
+  height: 200px;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
 
-.optionalInput select{
+.optionalInput select {
   margin: 0 5px;
   width: 45%;
   height: 50px;
 }
-.optionalInput--active{
-  display: flex;
+.optionalInput--active {
+  opacity: 1;
+  max-height: 200px;
 }
 
+.optionalIncomeInput {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  display: flex;
+  margin: 5px auto;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 200px;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+}
+
+.optionalIncomeInput--active {
+  opacity: 1;
+  max-height: 200px;
+}
+
+.searchIncomes input {
+  margin: 5px;
+}
